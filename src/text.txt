@@ -1,0 +1,97 @@
+an object is not iterable 
+if u try to iterate over n object using key value pairs,
+it raise an error says 'object is not iterable'
+
+
+to make an object iterable we use [Symbol.iterator]
+The Symbol.iterator static data property represents 
+the well-known symbol specifying the method that 
+returns the iterator for an object.
+ If this property is set on an object, 
+ it is an iterable and can be used in a for...of loop 
+ and various other syntaxes.
+
+  // [...tree.preOrderTraversal()].map((x) => x.value);
+  // console.log(tree.root.value);
+  // console.log(tree.root.hasChildren);
+  // console.log(tree.find(12).isLeaf);
+  // console.log(tree.find(121).isLeaf);
+  // console.log(tree.find(121).parent.value);
+
+  remove(key) {
+      for (let node of this.preOrderTraversal()) {
+        const filtered = node.children.filter((c) => c.key !== key);
+        if (filtered.length !== node.children.length) {
+          node.children = filtered;
+          return true;
+        }
+      }
+      return false;
+    }
+
+    find(key) {
+      for (let node of this.preOrderTraversal()) {
+        if (node.key === key) return node;
+      }
+      return undefined;
+    }
+  tree.remove(12);
+
+  [...tree.postOrderTraversal()].map((x) => x.value);
+
+ // let obj = {
+  //   prop: "value",
+  //   someProp: "someValue",
+  //   anotherProp: "anotherValue",
+
+  //   [Symbol.iterator]() {
+  //     let values = Object.values(this);
+  //     let index = 0;
+  //     return {
+  //       next() {
+  //         if (index < values.length) {
+  //           let val = values[index];
+  //           index++;
+  //           return { value: val, done: false };
+  //         } else return { done: true };
+  //       },
+  //     };
+  //   },
+  // };
+
+  // for (let i of obj) {
+  //   console.log(i);
+  // }
+
+    // get isLeaf() {
+    //   return this.children.length === 0;
+    // }
+
+    // get hasChildren() {
+    //   return !this.isLeaf;
+    // }
+        // *postOrderTraversal(node = this.root) {
+    //   if (node.children.length) {
+    //     for (let child of node.children) {
+    //       yield* this.postOrderTraversal(child);
+    //     }
+    //   }
+    //   yield node;
+    // }
+
+    // console.log(typeof tree);
+
+  // let data = tree;
+  // const iterateOverTree = (data) => {
+  //   Object.entries(data).forEach(([k, v]) => {
+  //     if (v.children.length) {
+  //       console.log(v.children);
+  //       iterateOverTree(v.children);
+  //     } else {
+  //       return null;
+  //     }
+  //   });
+  // };
+  // useEffect(() => {
+  //   iterateOverTree(data);
+  // },[]);
